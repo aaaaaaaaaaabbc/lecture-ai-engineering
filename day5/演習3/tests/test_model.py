@@ -17,6 +17,8 @@ DATA_PATH = os.path.join(os.path.dirname(__file__), "../data/Titanic.csv")
 MODEL_DIR = os.path.join(os.path.dirname(__file__), "../models")
 MODEL_PATH = os.path.join(MODEL_DIR, "titanic_model.pkl")
 
+baseline = -1
+
 
 @pytest.fixture
 def sample_data():
@@ -119,6 +121,16 @@ def test_model_accuracy(train_model):
 
     # Titanicデータセットでは0.75以上の精度が一般的に良いとされる
     assert accuracy >= 0.75, f"モデルの精度が低すぎます: {accuracy}"
+
+def test_model_accuracy_before(train_model):
+    model, X_test, y_test = train_model
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test,y_pred)
+    global baseline
+
+    assert accuracy >= baseline,f"モデルの精度が前回のものより低いです: {accuracy}"
+
+    baseline = accuracy
 
 
 def test_model_inference_time(train_model):
