@@ -125,8 +125,8 @@ def test_model_accuracy_before(train_model):
     model, X_test, y_test = train_model
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test,y_pred)
-
-    assert accuracy >= baseline,f"モデルの精度が前回のものより低いです: {accuracy}"
+    if baseline != None:
+        assert accuracy >= baseline,f"モデルの精度が前回のものより低いです: {accuracy}"
     baseline = accuracy
 
 
