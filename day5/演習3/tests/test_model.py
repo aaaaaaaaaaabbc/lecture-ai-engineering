@@ -127,7 +127,9 @@ def test_model_accuracy_before(train_model):
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test,y_pred)
     global baseline
+
     assert accuracy >= baseline,f"モデルの精度が前回のものより低いです: {accuracy}"
+    
     baseline = accuracy
 
 
